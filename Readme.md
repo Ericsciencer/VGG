@@ -17,7 +17,7 @@ VGG的核心架构为"模块化卷积块堆叠"的端到端深度卷积神经网
 -  **特征提取模块（卷积层）**：由5个连续的卷积块组成，每个卷积块内部堆叠2-4个3×3卷积核（步长1，填充1），所有卷积层后均接ReLU非线性激活函数；每个卷积块末尾接一个2×2步长2的最大池化层，将特征图尺寸减半。通道数从第一个卷积块的64开始，每经过一个池化层通道数翻倍，最终达到512。这种设计使得两个3×3卷积的感受野等价于一个5×5卷积，三个3×3卷积的感受野等价于一个7×7卷积，同时大幅减少了参数量并增加了网络的非线性表达能力。
 -  **分类输出模块（3个全连接层）**：先通过自适应平均池化将卷积输出的特征图固定为7×7，再通过flatten展平为一维向量。前两层全连接层均为4096维输出，搭配ReLU激活与Dropout（随机丢弃率0.5）抑制过拟合；最后一层全连接层为输出层，维度匹配分类任务的类别数（原论文ImageNet任务为1000维），输出各类别的预测得分。
 
-
+<img width="1094" height="629" alt="image" src="https://github.com/user-attachments/assets/d3ba607f-30aa-4edc-b7db-8f604a80baff" />
 <img width="636" height="545" alt="image" src="https://github.com/user-attachments/assets/99679924-39bb-4ffe-803c-3c4c233de148" />
 
 
@@ -41,7 +41,7 @@ The core architecture of VGG is an **end-to-end deep convolutional neural networ
 
 - **Classification Output Module (3 Fully Connected Layers)**: First, the feature map output by the convolution is fixed to 7×7 through adaptive average pooling, and then flattened into a one-dimensional vector through flatten. The first two fully connected layers are both 4096-dimensional outputs, combined with ReLU activation and Dropout (random drop rate of 0.5) to suppress overfitting. The last fully connected layer is the output layer, and the dimension matches the number of categories in the classification task (1000 dimensions for the ImageNet task in the original paper), outputting the prediction scores for each category.
 
-
+<img width="1094" height="629" alt="image" src="https://github.com/user-attachments/assets/1493590c-85d8-4a32-b7da-eaf20eaf5b38" />
 <img width="1145" height="540" alt="image" src="https://github.com/user-attachments/assets/7b733b79-6a51-4f62-adab-6a776851bb7b" />
 
 
