@@ -3,7 +3,9 @@
 [中文简介](#简介) | [English](#Introduction)
 
 ### 结果 | Result
-<img width="826" height="636" alt="VGG16-CIFAR训练曲线" src="https://github.com/user-attachments/assets/70edb93e-efe0-4a1b-966d-2fff7551a952" />
+
+<img width="2480" height="1914" alt="vgg16_cifar_training_curve" src="https://github.com/user-attachments/assets/096d4f96-c10f-43ce-8e07-d6be367c819b" />
+
 
 ---
 
@@ -11,12 +13,13 @@
 VGG 是由牛津大学视觉几何组（Visual Geometry Group, VGG）的 Karen Simonyan 和 Andrew Zisserman 于 2014 年提出的经典深度卷积神经网络，相关成果发表于《Very Deep Convolutional Networks for Large-Scale Image Recognition》。它在当年的 ImageNet 大规模图像分类竞赛中，将 Top-5 错误率从 AlexNet 的 15.3% 进一步降至 7.3%，以压倒性优势获得亚军。其核心架构首次系统性地证明了**增加网络深度是提升视觉任务性能的关键因素**，并确立了"统一使用3×3小卷积核堆叠+逐层通道翻倍+最大池化降维"的标准CNN设计范式。VGG的设计思想极其简洁且具有极强的可扩展性，不仅成为了后续所有深度卷积神经网络的基础架构模板，更被广泛应用于目标检测、语义分割、图像生成等几乎所有计算机视觉领域，是深度学习发展史上最具影响力的模型之一。
 
 ## 架构
-VGG的核心架构为**"模块化卷积块堆叠"的端到端深度卷积神经网络**，整体分为「卷积特征提取模块」和「全连接分类模块」两大核心部分。原论文提出了6种不同深度的网络变体，其中**VGG16（13个卷积层+3个全连接层）**和**VGG19（16个卷积层+3个全连接层）**是最常用的两个版本。原论文标准输入为224×224分辨率的3通道RGB图像，最终输出对应分类类别的预测概率，具体结构与设计如下：
+VGG的核心架构为"模块化卷积块堆叠"的端到端深度卷积神经网络，整体分为「卷积特征提取模块」和「全连接分类模块」两大核心部分。原论文提出了6种不同深度的网络变体，其中VGG16（13个卷积层+3个全连接层）和VGG19（16个卷积层+3个全连接层）是最常用的两个版本。原论文标准输入为224×224分辨率的3通道RGB图像，最终输出对应分类类别的预测概率，具体结构与设计如下：
 -  **特征提取模块（卷积层）**：由5个连续的卷积块组成，每个卷积块内部堆叠2-4个3×3卷积核（步长1，填充1），所有卷积层后均接ReLU非线性激活函数；每个卷积块末尾接一个2×2步长2的最大池化层，将特征图尺寸减半。通道数从第一个卷积块的64开始，每经过一个池化层通道数翻倍，最终达到512。这种设计使得两个3×3卷积的感受野等价于一个5×5卷积，三个3×3卷积的感受野等价于一个7×7卷积，同时大幅减少了参数量并增加了网络的非线性表达能力。
 -  **分类输出模块（3个全连接层）**：先通过自适应平均池化将卷积输出的特征图固定为7×7，再通过flatten展平为一维向量。前两层全连接层均为4096维输出，搭配ReLU激活与Dropout（随机丢弃率0.5）抑制过拟合；最后一层全连接层为输出层，维度匹配分类任务的类别数（原论文ImageNet任务为1000维），输出各类别的预测得分。
 
-<img width="1115" height="320" alt="VGG网络架构图" src="https://github.com/user-attachments/assets/2cf22eed-0dfd-4fe6-aa0e-f664fdb3b021" />
-<img width="541" height="713" alt="VGG16与VGG19结构对比" src="https://github.com/user-attachments/assets/9f08ade7-f8d4-4bb8-bb71-f66f0f685ff6" />
+
+<img width="636" height="545" alt="image" src="https://github.com/user-attachments/assets/99679924-39bb-4ffe-803c-3c4c233de148" />
+
 
 **注意**：我们使用的是数据集CIFAR-10，它是10类数据，并且不同于原文献，由于 CIFAR-10 图像尺寸（32×32）远小于原论文的 224×224，我们会对网络结构做微小适配（主要是去掉后2个卷积块，精简全连接层维度），但核心架构（3×3卷积堆叠+通道数翻倍+ReLU+Dropout）完全保留。
 
@@ -38,8 +41,9 @@ The core architecture of VGG is an **end-to-end deep convolutional neural networ
 
 - **Classification Output Module (3 Fully Connected Layers)**: First, the feature map output by the convolution is fixed to 7×7 through adaptive average pooling, and then flattened into a one-dimensional vector through flatten. The first two fully connected layers are both 4096-dimensional outputs, combined with ReLU activation and Dropout (random drop rate of 0.5) to suppress overfitting. The last fully connected layer is the output layer, and the dimension matches the number of categories in the classification task (1000 dimensions for the ImageNet task in the original paper), outputting the prediction scores for each category.
 
-<img width="1115" height="320" alt="VGG Network Architecture" src="https://github.com/user-attachments/assets/2cf22eed-0dfd-4fe6-aa0e-f664fdb3b021" />
-<img width="495" height="710" alt="VGG16 vs VGG19 Structure Comparison" src="https://github.com/user-attachments/assets/879eb220-786e-4e1c-b4d1-30695ee02f60" />
+
+<img width="1145" height="540" alt="image" src="https://github.com/user-attachments/assets/7b733b79-6a51-4f62-adab-6a776851bb7b" />
+
 
 **Note:** We use the CIFAR-10 dataset, which is a 10-class dataset. Unlike the original paper, the image size of CIFAR-10 (32×32) is much smaller than the 224×224 in the original paper. We will make minor adaptations to the network structure (mainly removing the last 2 convolution blocks and simplifying the dimension of the fully connected layers), but the core architecture (3×3 convolution stacking + doubling the number of channels + ReLU + Dropout) will be completely retained.
 
